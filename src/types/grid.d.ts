@@ -1,3 +1,8 @@
+export type ActiveLetterCoords = {
+  colIndex: number;
+  rowIndex: number;
+};
+
 export type CrosswordConfig = {
   across: {
     [key: string]: WordConfig;

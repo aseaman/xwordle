@@ -2,10 +2,13 @@ import { Component, For } from "solid-js";
 import { isTileBlank } from "../../util/util";
 import LetterTile from "./LetterTile";
 
-import { WordConfig } from "../../types/grid";
+import { ActiveLetterCoords, WordConfig } from "../../types/grid";
 
 const WordRow: Component<{
+  activeLetterCoords: ActiveLetterCoords;
   rowData: WordConfig;
+  rowIndex: number;
+  updateActiveLetterCoords: (coords: ActiveLetterCoords) => void;
 }> = (props) => {
   const row = props.rowData;
   return (
@@ -13,7 +16,11 @@ const WordRow: Component<{
       <For each={new Array(5)}>
         {(_, index) => (
           <LetterTile
+            activeLetterCoords={props.activeLetterCoords}
+            colIndex={index()}
             isBlank={isTileBlank({ index: index(), rowConfig: row })}
+            rowIndex={props.rowIndex}
+            updateActiveLetterCoords={props.updateActiveLetterCoords}
           />
         )}
       </For>
