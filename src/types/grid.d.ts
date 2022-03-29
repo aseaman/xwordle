@@ -1,5 +1,6 @@
 export type ActiveLetterCoords = {
   colIndex: number;
+  direction: string;
   rowIndex: number;
 };
 

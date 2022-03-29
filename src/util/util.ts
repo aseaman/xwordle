@@ -18,3 +18,24 @@ export function isTileBlank({
 
   return index + 1 > word.length + rowConfig.col;
 }
+
+type IsTileInActiveWord = {
+  activeColIndex: number;
+  activeRowIndex: number;
+  direction: string;
+  tileColIndex: number;
+  tileRowIndex: number;
+};
+export function isTileInActiveWord({
+  activeColIndex,
+  activeRowIndex,
+  direction,
+  tileColIndex,
+  tileRowIndex,
+}: IsTileInActiveWord) {
+  if (direction === "across") {
+    return activeRowIndex === tileRowIndex;
+  } else {
+    return activeColIndex === tileColIndex;
+  }
+}

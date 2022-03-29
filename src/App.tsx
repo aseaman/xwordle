@@ -16,6 +16,7 @@ const getRandomCrossword = () => {
 const App: Component = () => {
   const [activeLetterCoords, setActiveLetterCoords] = createStore({
     colIndex: 0,
+    direction: "across",
     rowIndex: 0,
   });
   const xword = getRandomCrossword();

@@ -1,5 +1,4 @@
-import type { Component, Setter } from "solid-js";
-import { SetStoreFunction } from "solid-js/store";
+import type { Component } from "solid-js";
 import { ActiveLetterCoords, CrosswordConfig } from "../../types/grid";
 import WordRow from "./WordRow";
 
