@@ -1,7 +1,25 @@
-export default () => (
-  <header class="flex items-center justify-between py-10">
-    <div>left</div>
-    <div>middle</div>
-    <div>right</div>
+import { Component } from "solid-js";
+import ThemeToggleButton from "./ThemeToggleButton";
+
+type HeaderProps = {
+  handleToggleTheme: (theme: "light" | "dark") => void;
+  theme: string;
+};
+const Header: Component<HeaderProps> = (props) => (
+  <header class="flex items-center justify-between py-10 border-b border-black dark:border-gray-700">
+    <div></div>
+    <div>
+      <h1 class="inline-block text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight dark:text-slate-200">
+        xwordle
+      </h1>
+    </div>
+    <div>
+      <ThemeToggleButton
+        handleToggleTheme={props.handleToggleTheme}
+        theme={props.theme}
+      />
+    </div>
   </header>
 );
+
+export default Header;

@@ -38,6 +38,8 @@ const App: Component = () => {
     createEmptyGuessesForPuzzle(xword)
   );
   const [currentGuess, setCurrentGuess] = createSignal("");
+  const [theme, setTheme] = createSignal("light");
+
   const currentWord = createMemo(() =>
     getCurrentWord({
       activeLetterCoords: activeLetterCoords,
@@ -114,10 +116,20 @@ const App: Component = () => {
     }
   };
 
+  const handleToggleTheme = (theme: "light" | "dark") => {
+    setTheme(theme);
+
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
     <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
       <div class="flex h-screen flex-col justify-between">
-        <Header />
+        <Header handleToggleTheme={handleToggleTheme} theme={theme()} />
         <div class="flex flex-1">
           <Crossword
             activeLetterCoords={activeLetterCoords}
