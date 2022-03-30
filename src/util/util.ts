@@ -1,4 +1,18 @@
 import { ActiveLetterCoords, CrosswordConfig, WordConfig } from "../types/grid";
+import { Guesses } from "../types/guesses";
+
+export function createEmptyGuessesForPuzzle(xword: CrosswordConfig) {
+  const guesses = {};
+  Object.keys(xword).forEach((directionKey) => {
+    Object.keys(xword[directionKey]).forEach((wordKey) => {
+      if (!guesses[directionKey]) {
+        guesses[directionKey] = {};
+      }
+      guesses[directionKey][wordKey] = [];
+    });
+  });
+  return guesses as Guesses;
+}
 
 export function getCurrentWord({
   activeLetterCoords,
@@ -24,6 +38,37 @@ export function getCurrentWord({
     word = matched ? matched.value : "";
   }
   return word;
+}
+
+export function getGuessesForCurrentWord({
+  activeLetterCoords,
+  crosswordConfig,
+  guesses,
+}: {
+  activeLetterCoords: ActiveLetterCoords;
+  crosswordConfig: CrosswordConfig;
+  guesses: Guesses;
+}) {
+  const direction = activeLetterCoords.direction;
+  let guessesForWord: string[] = [];
+  const opts: {
+    [key: string]: WordConfig;
+  } = crosswordConfig[direction];
+  if (direction === "across") {
+    Object.keys(opts).forEach((wordKey) => {
+      if (opts[wordKey].row === activeLetterCoords.rowIndex) {
+        guessesForWord = guesses[direction][wordKey];
+      }
+    });
+  }
+  if (direction === "down") {
+    Object.keys(opts).forEach((wordKey) => {
+      if (opts[wordKey].col === activeLetterCoords.colIndex) {
+        guessesForWord = guesses[direction][wordKey];
+      }
+    });
+  }
+  return guessesForWord;
 }
 
 export function isTileBlank({
