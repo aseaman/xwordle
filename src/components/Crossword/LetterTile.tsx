@@ -9,6 +9,7 @@ const LetterTile: Component<{
   isBlank: boolean;
   rowIndex: number;
   updateActiveLetterCoords: (coords: ActiveLetterCoords) => void;
+  value: string;
 }> = (props) => {
   const isActiveTile = createMemo(
     () =>
@@ -54,7 +55,9 @@ const LetterTile: Component<{
           rowIndex: props.rowIndex,
         });
       }}
-    ></span>
+    >
+      {props.value}
+    </span>
   );
 };
 

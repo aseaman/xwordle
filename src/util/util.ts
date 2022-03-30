@@ -148,6 +148,40 @@ export function getLetterStatus({
   };
 }
 
+type GetUpdatedCrosswordState = {
+  activeLetterCoords: ActiveLetterCoords;
+  currentState: CrosswordState;
+  word: string;
+};
+export function getUpdatedCrosswordState({
+  activeLetterCoords,
+  currentState,
+  word,
+}: GetUpdatedCrosswordState) {
+  const updatedState = currentState.map((arr) => arr.slice());
+  const direction = activeLetterCoords.direction;
+
+  if (direction === "across") {
+    updatedState[activeLetterCoords.rowIndex].forEach((el, idx) => {
+      if (!el.isBlank) {
+        el.value = word.charAt(idx);
+      }
+    });
+  }
+  if (direction === "down") {
+    let ltrIdx = 0;
+    updatedState.forEach((stateRow) => {
+      if (!stateRow[activeLetterCoords.colIndex].isBlank) {
+        stateRow[activeLetterCoords.colIndex].value = word.charAt(ltrIdx);
+        ltrIdx++;
+      }
+    });
+  }
+
+  console.log(updatedState);
+  return updatedState;
+}
+
 type GetWordKey = {
   activeLetterCoords: ActiveLetterCoords;
   crosswordConfig: CrosswordConfig;

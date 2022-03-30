@@ -24,6 +24,9 @@ const NewCrossword: Component<NewCrosswordProps> = (props) => {
                     }
                     rowIndex={rowIndex()}
                     updateActiveLetterCoords={props.updateActiveLetterCoords}
+                    value={
+                      props.crosswordState[rowIndex()][colIndex()].value || ""
+                    }
                   />
                 )}
               </For>

@@ -15,6 +15,7 @@ import {
   createEmptyGuessesForPuzzle,
   getCurrentWord,
   getGuessesForCurrentWord,
+  getUpdatedCrosswordState,
   getWordKey,
 } from "./util/util";
 import { ActiveLetterCoords } from "./types/grid";
@@ -81,7 +82,13 @@ const App: Component = () => {
         return;
       }
       if (guess === currentWord()) {
-        // Update crossword state
+        setCrosswordState(
+          getUpdatedCrosswordState({
+            activeLetterCoords,
+            currentState: crosswordState(),
+            word: currentWord(),
+          })
+        );
       }
       const dir = activeLetterCoords.direction;
       const wordKey = getWordKey({
