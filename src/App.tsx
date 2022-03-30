@@ -5,7 +5,6 @@ import Crossword from "./components/Crossword/Crossword";
 import Guesses from "./components/Guesses/Guesses";
 import Header from "./components/Header/Header";
 import Keyboard from "./components/Keyboard/Keyboard";
-import NewCrossword from "./components/Crossword/NewCrossword";
 
 import allowedWords from "./data/allowedWords";
 import crosswords from "./data/crosswords";
@@ -114,18 +113,13 @@ const App: Component = () => {
       setCurrentGuess(updatedGuess);
     }
   };
+
   return (
     <div class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0">
       <div class="flex h-screen flex-col justify-between">
         <Header />
         <div class="flex flex-1">
-          {/* <Crossword
-            activeLetterCoords={activeLetterCoords}
-            crosswordConfig={xword}
-            currentGuess={currentGuess()}
-            updateActiveLetterCoords={updateActiveLetterCoords}
-          /> */}
-          <NewCrossword
+          <Crossword
             activeLetterCoords={activeLetterCoords}
             crosswordState={crosswordState()}
             updateActiveLetterCoords={updateActiveLetterCoords}

@@ -1,29 +1,41 @@
-import type { Component } from "solid-js";
-import { ActiveLetterCoords, CrosswordConfig } from "../../types/grid";
-import WordRow from "./WordRow";
+import { Component, For } from "solid-js";
+import { ActiveLetterCoords, CrosswordState } from "../../types/grid";
+import LetterTile from "./LetterTile";
 
-type CrosswordProps = {
+type NewCrosswordProps = {
   activeLetterCoords: ActiveLetterCoords;
-  crosswordConfig: CrosswordConfig;
-  currentGuess: string;
+  crosswordState: CrosswordState;
   updateActiveLetterCoords: (coords: ActiveLetterCoords) => void;
 };
-const Crossword: Component<CrosswordProps> = (props) => {
-  const across = props.crosswordConfig.across;
+const NewCrossword: Component<NewCrosswordProps> = (props) => {
   return (
     <div class="flex justify-center items-center flex-grow overflow-hidden">
       <div class="grid gap-1.5 grid-rows-5 p-2.5 box-border">
-        {Object.keys(across).map((key, index) => (
-          <WordRow
-            activeLetterCoords={props.activeLetterCoords}
-            rowData={across[key]}
-            rowIndex={index}
-            updateActiveLetterCoords={props.updateActiveLetterCoords}
-          />
-        ))}
+        <For each={new Array(5)}>
+          {(_, rowIndex) => (
+            <div class="grid gap-1.5 grid-cols-5">
+              <For each={new Array(5)}>
+                {(__, colIndex) => (
+                  <LetterTile
+                    activeLetterCoords={props.activeLetterCoords}
+                    colIndex={colIndex()}
+                    isBlank={
+                      !!props.crosswordState[rowIndex()][colIndex()].isBlank
+                    }
+                    rowIndex={rowIndex()}
+                    updateActiveLetterCoords={props.updateActiveLetterCoords}
+                    value={
+                      props.crosswordState[rowIndex()][colIndex()].value || ""
+                    }
+                  />
+                )}
+              </For>
+            </div>
+          )}
+        </For>
       </div>
     </div>
   );
 };
 
-export default Crossword;
+export default NewCrossword;
