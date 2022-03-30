@@ -1,5 +1,42 @@
-import { ActiveLetterCoords, CrosswordConfig, WordConfig } from "../types/grid";
+import {
+  ActiveLetterCoords,
+  CrosswordConfig,
+  CrosswordState,
+  WordConfig,
+} from "../types/grid";
 import { Guesses } from "../types/guesses";
+
+export function createCrosswordState(xword: CrosswordConfig) {
+  const state: CrosswordState = [];
+  const across = xword.across;
+  for (let i = 0; i < 5; i++) {
+    state[i] = [];
+    for (let j = 0; j < 5; j++) {
+      state[i][j] = {};
+    }
+  }
+
+  Object.values(across).forEach((acrossWord) => {
+    if (acrossWord.value.length !== 5) {
+      if (acrossWord.col !== 0) {
+        let startIndex = acrossWord.col;
+        while (startIndex > 0) {
+          startIndex--;
+          state[acrossWord.row][startIndex] = { isBlank: true };
+        }
+      }
+      if (acrossWord.col === 0) {
+        let endIndex = acrossWord.value.length;
+        while (endIndex < 5) {
+          state[acrossWord.row][endIndex] = { isBlank: true };
+          endIndex++;
+        }
+      }
+    }
+  });
+
+  return state;
+}
 
 export function createEmptyGuessesForPuzzle(xword: CrosswordConfig) {
   const guesses = {};
@@ -108,4 +145,23 @@ export function isTileInActiveWord({
   } else {
     return activeColIndex === tileColIndex;
   }
+}
+
+type IsCellBlank = {
+  across: {
+    [key: string]: WordConfig;
+  };
+  xPos: number;
+  yPos: number;
+};
+function isCellBlank({ across, xPos, yPos }: IsCellBlank) {
+  let isBlank = false;
+
+  Object.values(across).forEach((word) => {
+    console.log(word, xPos, yPos);
+    if (xPos === word.row) {
+    }
+  });
+
+  return isBlank;
 }

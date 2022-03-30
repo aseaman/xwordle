@@ -5,10 +5,12 @@ import Crossword from "./components/Crossword/Crossword";
 import Guesses from "./components/Guesses/Guesses";
 import Header from "./components/Header/Header";
 import Keyboard from "./components/Keyboard/Keyboard";
+import NewCrossword from "./components/Crossword/NewCrossword";
 
 import crosswords from "./data/crosswords";
 import Constants from "./util/constants";
 import {
+  createCrosswordState,
   createEmptyGuessesForPuzzle,
   getCurrentWord,
   getGuessesForCurrentWord,
@@ -27,6 +29,9 @@ const App: Component = () => {
     direction: "across",
     rowIndex: 0,
   });
+  const [crosswordState, setCrosswordState] = createSignal(
+    createCrosswordState(xword)
+  );
   const [guesses, setGuesses] = createSignal(
     createEmptyGuessesForPuzzle(xword)
   );
@@ -68,9 +73,15 @@ const App: Component = () => {
       <div class="flex h-screen flex-col justify-between">
         <Header />
         <div class="flex flex-1">
-          <Crossword
+          {/* <Crossword
             activeLetterCoords={activeLetterCoords}
             crosswordConfig={xword}
+            currentGuess={currentGuess()}
+            updateActiveLetterCoords={updateActiveLetterCoords}
+          /> */}
+          <NewCrossword
+            activeLetterCoords={activeLetterCoords}
+            crosswordState={crosswordState()}
             updateActiveLetterCoords={updateActiveLetterCoords}
           />
           <Guesses

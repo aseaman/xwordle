@@ -13,6 +13,13 @@ export type CrosswordConfig = {
   };
 };
 
+export type CrosswordState = CellState[][];
+
+type CellState = {
+  isBlank?: boolean;
+  value?: string;
+};
+
 export type WordConfig = {
   col: number;
   row: number;

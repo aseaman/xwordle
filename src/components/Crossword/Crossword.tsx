@@ -2,11 +2,13 @@ import type { Component } from "solid-js";
 import { ActiveLetterCoords, CrosswordConfig } from "../../types/grid";
 import WordRow from "./WordRow";
 
-const Grid: Component<{
+type CrosswordProps = {
   activeLetterCoords: ActiveLetterCoords;
   crosswordConfig: CrosswordConfig;
+  currentGuess: string;
   updateActiveLetterCoords: (coords: ActiveLetterCoords) => void;
-}> = (props) => {
+};
+const Crossword: Component<CrosswordProps> = (props) => {
   const across = props.crosswordConfig.across;
   return (
     <div class="flex justify-center items-center flex-grow overflow-hidden">
@@ -24,4 +26,4 @@ const Grid: Component<{
   );
 };
 
-export default Grid;
+export default Crossword;
