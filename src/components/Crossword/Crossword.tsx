@@ -9,7 +9,7 @@ type NewCrosswordProps = {
 };
 const NewCrossword: Component<NewCrosswordProps> = (props) => {
   return (
-    <div class="flex justify-center items-center flex-grow overflow-hidden">
+    <div class="flex justify-center items-center flex-grow overflow-hidden w-2/4">
       <div class="grid gap-1.5 grid-rows-5 p-2.5 box-border">
         <For each={new Array(5)}>
           {(_, rowIndex) => (
