@@ -108,6 +108,76 @@ export function getGuessesForCurrentWord({
   return guessesForWord;
 }
 
+export function getLetterStatus({
+  currentWord,
+  letter,
+  letterIndex,
+}: {
+  currentWord: string;
+  letter: string;
+  letterIndex: number;
+}) {
+  let isInvalid = false;
+  let isMisplaced = false;
+  let isValid = false;
+  const indices = [];
+  currentWord.split("").forEach((ltr, idx) => {
+    if (letter === ltr) {
+      indices.push(idx);
+    }
+  });
+
+  if (indices.length === 0) {
+    isInvalid = true;
+    return {
+      isInvalid,
+      isMisplaced,
+      isValid,
+    };
+  }
+  if (indices.indexOf(letterIndex) === -1 && !isInvalid) {
+    isMisplaced = true;
+  } else {
+    isValid = true;
+  }
+
+  return {
+    isInvalid,
+    isMisplaced,
+    isValid,
+  };
+}
+
+type GetWordKey = {
+  activeLetterCoords: ActiveLetterCoords;
+  crosswordConfig: CrosswordConfig;
+};
+export function getWordKey({
+  activeLetterCoords,
+  crosswordConfig,
+}: GetWordKey) {
+  let key: string | null = null;
+  const direction = activeLetterCoords.direction;
+  const opts: {
+    [key: string]: WordConfig;
+  } = crosswordConfig[direction];
+  if (direction === "across") {
+    Object.keys(opts).forEach((wordKey) => {
+      if (opts[wordKey].row === activeLetterCoords.rowIndex) {
+        key = wordKey;
+      }
+    });
+  }
+  if (direction === "down") {
+    Object.keys(opts).forEach((wordKey) => {
+      if (opts[wordKey].col === activeLetterCoords.colIndex) {
+        key = wordKey;
+      }
+    });
+  }
+  return key;
+}
+
 export function isTileBlank({
   index,
   rowConfig,

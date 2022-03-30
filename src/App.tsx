@@ -7,6 +7,7 @@ import Header from "./components/Header/Header";
 import Keyboard from "./components/Keyboard/Keyboard";
 import NewCrossword from "./components/Crossword/NewCrossword";
 
+import allowedWords from "./data/allowedWords";
 import crosswords from "./data/crosswords";
 import Constants from "./util/constants";
 import {
@@ -14,6 +15,7 @@ import {
   createEmptyGuessesForPuzzle,
   getCurrentWord,
   getGuessesForCurrentWord,
+  getWordKey,
 } from "./util/util";
 import { ActiveLetterCoords } from "./types/grid";
 
@@ -49,8 +51,10 @@ const App: Component = () => {
       guesses: guesses(),
     })
   );
-  const updateActiveLetterCoords = (coords: ActiveLetterCoords) =>
+  const updateActiveLetterCoords = (coords: ActiveLetterCoords) => {
     setActiveLetterCoords(coords);
+    setCurrentGuess("");
+  };
 
   const handleKeyClick = (value: string) => {
     if (value === Constants.DELETE_KEY) {
@@ -59,7 +63,42 @@ const App: Component = () => {
       }
       setCurrentGuess((prev) => prev.substring(0, prev.length - 1));
     } else if (value === Constants.ENTER_KEY) {
-      console.log("handle adding guess");
+      const allGuesses = { ...guesses() };
+      const currWord = currentWord();
+      const guess = currentGuess();
+      const guessesForWord = currentWordGuesses();
+
+      if (allowedWords.indexOf(guess.toLowerCase()) === -1) {
+        console.error("invalid word", guess);
+        return;
+      }
+
+      if (
+        guess.length !== currWord.length ||
+        guessesForWord.length === 6 ||
+        guessesForWord.indexOf(guess) !== -1
+      ) {
+        return;
+      }
+      if (guess === currentWord()) {
+        // Update crossword state
+      }
+      const dir = activeLetterCoords.direction;
+      const wordKey = getWordKey({
+        activeLetterCoords,
+        crosswordConfig: xword,
+      });
+      if (wordKey && allGuesses[dir] && allGuesses[dir][wordKey]) {
+        const updatedGuesses = [...guessesForWord, guess];
+        setGuesses((prev) => ({
+          ...prev,
+          [dir]: {
+            ...prev[dir],
+            [wordKey]: updatedGuesses,
+          },
+        }));
+      }
+      setCurrentGuess("");
     } else {
       if (currentGuess().length === currentWord().length) {
         return;

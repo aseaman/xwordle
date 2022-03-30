@@ -8,7 +8,6 @@ type NewCrosswordProps = {
   updateActiveLetterCoords: (coords: ActiveLetterCoords) => void;
 };
 const NewCrossword: Component<NewCrosswordProps> = (props) => {
-  console.log(props.crosswordState);
   return (
     <div class="flex justify-center items-center flex-grow overflow-hidden">
       <div class="grid gap-1.5 grid-rows-5 p-2.5 box-border">
