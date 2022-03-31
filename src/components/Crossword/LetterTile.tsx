@@ -30,7 +30,7 @@ const LetterTile: Component<{
       "w-16 h-16 inline-flex justify-center items-center text-4xl leading-8 font-bold box-border align-middle",
       {
         "bg-black": props.isBlank,
-        "border-slate-200 border-2": !props.isBlank,
+        "border-slate-700 dark:border-slate-200 border-2": !props.isBlank,
         "bg-yellow-200": isActiveTile(),
         "bg-cyan-100":
           !isActiveTile() && !props.isBlank && isTilePartOfActive(),

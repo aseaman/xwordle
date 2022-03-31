@@ -142,7 +142,11 @@ const App: Component = () => {
             guessesForWord={currentWordGuesses()}
           />
         </div>
-        <Keyboard handleKeyClick={handleKeyClick} />
+        <Keyboard
+          currentWord={currentWord()}
+          guessesForWord={currentWordGuesses()}
+          handleKeyClick={handleKeyClick}
+        />
       </div>
     </div>
   );

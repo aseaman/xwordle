@@ -25,7 +25,7 @@ const Guesses: Component<GuessesProps> = (props) => {
       : [];
   });
   return (
-    <div class="flex justify-center items-center flex-grow overflow-hidden w-2/4">
+    <div class="flex justify-center items-center flex-grow overflow-hidden w-2/4 border-l-2 border-black dark:border-gray-700">
       <div class={rowClasses()}>
         <For each={props.guessesForWord}>
           {(prevGuess) => (

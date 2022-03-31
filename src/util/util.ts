@@ -108,6 +108,48 @@ export function getGuessesForCurrentWord({
   return guessesForWord;
 }
 
+export function getKeyStatus({
+  currentWord,
+  guessesForWord,
+  letter,
+}: {
+  currentWord: string;
+  guessesForWord: string[];
+  letter: string;
+}) {
+  let correct = false;
+  let invalid = false;
+  let misplaced = false;
+  let neutral = true;
+
+  guessesForWord.forEach((guess) => {
+    const index = guess.indexOf(letter);
+    if (index !== -1) {
+      neutral = false;
+
+      if (currentWord.charAt(index) === letter) {
+        correct = true;
+      } else if (currentWord.indexOf(letter) !== -1) {
+        misplaced = true;
+      } else {
+        invalid = true;
+      }
+    }
+  });
+
+  if (correct) {
+    return "correct";
+  }
+  if (misplaced) {
+    return "misplaced";
+  }
+  if (invalid) {
+    return "invalid";
+  }
+
+  return neutral ? "neutral" : "invalid";
+}
+
 export function getLetterStatus({
   currentWord,
   letter,
@@ -162,9 +204,11 @@ export function getUpdatedCrosswordState({
   const direction = activeLetterCoords.direction;
 
   if (direction === "across") {
+    let ltrIdx = 0;
     updatedState[activeLetterCoords.rowIndex].forEach((el, idx) => {
       if (!el.isBlank) {
-        el.value = word.charAt(idx);
+        el.value = word.charAt(ltrIdx);
+        ltrIdx++;
       }
     });
   }
