@@ -31,8 +31,8 @@ const LetterTile: Component<{
       {
         "bg-black": props.isBlank,
         "border-slate-700 dark:border-slate-200 border-2": !props.isBlank,
-        "bg-yellow-200": isActiveTile(),
-        "bg-cyan-100":
+        "bg-yellow-200 dark:bg-yellow-500": isActiveTile(),
+        "bg-cyan-100 dark:bg-teal-400":
           !isActiveTile() && !props.isBlank && isTilePartOfActive(),
       }
     )

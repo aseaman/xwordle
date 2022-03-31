@@ -59,6 +59,14 @@ const App: Component = () => {
   };
 
   const handleKeyClick = (value: string) => {
+    const currWord = currentWord();
+    const guessesForWord = currentWordGuesses();
+    const matched = guessesForWord.find((guess) => guess === currWord);
+
+    if (matched) {
+      return;
+    }
+
     if (value === Constants.DELETE_KEY) {
       if (currentGuess().length === 0) {
         return;
@@ -66,9 +74,7 @@ const App: Component = () => {
       setCurrentGuess((prev) => prev.substring(0, prev.length - 1));
     } else if (value === Constants.ENTER_KEY) {
       const allGuesses = { ...guesses() };
-      const currWord = currentWord();
       const guess = currentGuess();
-      const guessesForWord = currentWordGuesses();
 
       if (allowedWords.indexOf(guess.toLowerCase()) === -1) {
         console.error("invalid word", guess);
